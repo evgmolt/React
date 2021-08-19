@@ -1,59 +1,37 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
-import InputComponent from "./InputComponent";
 import MessageListComponent from "./MessageListComponent";
+import InputWrapperComponent from "./InputWrapperComponent"
 
 function App() {
 
-  const [inputMessage, setInputMessage] = useState("");
   const [messagesArray, setMessagesArray] = useState([]);
 
-
-  const onSendMessage= () => {
-    setMessagesArray(prev => [...prev, inputMessage]);
-    setInputMessage("");
-    setTimeout(() => {
-      setMessagesArray(prev => [...prev, "Сообщение получено"]);
-    }, 1500);
-    
+  const onSendMessage= (messageText, author) => {
+    setMessagesArray(prev => [...prev, {
+      messageText,
+      author : author,
+      }
+    ]);
   }
-
-  const onEnterPress = (key) => {
-    if (key.code === "Enter") {
-      onSendMessage();
-    }
-  }
-
+  
   useEffect(() => {
-   
+    if (messagesArray.length > 0) {
+      const botMessage = "Сообщение получено";
+      const botAuthor = "bot";
+      const lastMessage = messagesArray[messagesArray.length - 1];
+      console.log(lastMessage);
+      if (lastMessage.author !== botAuthor) {
+        console.log("Into");
+        setTimeout(() => onSendMessage(botMessage, botAuthor), 1500);
+      }
+    }
   }, [messagesArray])
 
   return (
     <div className="mainWrapper">
-{/*      <div className="messageList">
-        {messagesArray.map((message, i) => (
-            <div key={i}>{message}</div>
-        ))}
-        </div>*/}
       <MessageListComponent array= {messagesArray}/>
-      <div className="inputWrapper">
-{/*}        <input 
-          className="input" 
-          value={inputMessage} 
-          onChange={e => setInputMessage(e.target.value)}
-          onKeyDown={(key) => {
-            if (key.code === "Enter") {
-              onSendMessage();
-            }
-          }}
-        />*/}
-        <InputComponent value={inputMessage} onChange={setInputMessage} onKeyDown={(key) =>{
-              console.log("Code " + key.code);
-              if (key.code === "Enter") {
-              onSendMessage();
-            }}}/>
-        <button onClick={onSendMessage}>Отправить</button>
-      </div>
+      <InputWrapperComponent onSendMessage = {onSendMessage}/>
     </div>
   );
 } 
