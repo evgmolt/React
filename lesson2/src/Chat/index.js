@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Chat() {
-  // const [messagesArray, setMessagesArray] = useState([]);
+
   const { messagesArray } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
 
@@ -40,7 +40,6 @@ function Chat() {
   useEffect(() => {
     if (messagesArray.length > 0) {
       setTimeout(() => {
-        console.log("Message was sent");
       }, 1000);
     }
   }, [messagesArray]);

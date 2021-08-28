@@ -4,7 +4,7 @@ export const profileSlice = createSlice({
   name: "profile",
   initialState: {
     nick: "name",
-    sex: "m"
+    sex: "m",
   },
   reducers: {
     changeNick: (state, action) => {
@@ -14,7 +14,6 @@ export const profileSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { changeNick } =
-  profileSlice.actions;
+export const { changeNick } =   profileSlice.actions;
 
 export default profileSlice.reducer;
