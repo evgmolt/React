@@ -1,9 +1,5 @@
-import { useContext } from "react";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSelector, useDispatch } from "react-redux";
-import { MyDataContext } from "../index";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   noUnderline: {
@@ -23,23 +19,9 @@ const Playground = (props) => {
   const { messagesArray } = useSelector((state) => state.chat);
 
   return (
-    <>
-      <div>
-        Array of messages:
-        {messagesArray.map((o, i) => (
-          <div key={i}>{o.messageText}</div>
-        ))}
-      </div>
-      <TextField className={classes.noUnderline}>Playground</TextField>
-    </>
+    <div>Playground</div>
   );
 };
 
-const withAuthorizationHOC = function (Component) {
-  return (props) => {
-    // console.log("HOC PROPS", props);
-    return <Component userInfo={{ userId: 1, userName: "User" }} {...props} />;
-  };
-};
 
-export default withAuthorizationHOC(Playground);
+export default Playground;
