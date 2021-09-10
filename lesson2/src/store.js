@@ -1,10 +1,19 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
 import chatReducer from "./Chat/chatSlice";
-import profileReducer from "./Profile/profileSlice";
+import thunkMiddleware from "redux-thunk";
+import { persistReducer } from "redux-persist";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const reducers = combineReducers({ chat: chatReducer });
+
+const persistedReducer = persistReducer(persistConfig, reducers)
 
 export default configureStore({
-  reducer: {
-    chat: chatReducer,
-    profile: profileReducer,
-  },
+  reducer: persistedReducer,
+  middleware: [thunkMiddleware],
 });
