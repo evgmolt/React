@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     width: "350px",
     height: "100%",
     padding: "10px 10px 0px 10px",
-    
   },
 
   topComponent: {
@@ -73,11 +72,12 @@ const routes = [
   },
   { pathTitle: "Chat", path: "/chat" },
   { pathTitle: "Playground", path: "/playground" },
+  { pathTitle: "Stocks", path: "/stocks" },
 ];
 
 const AppBar = () => {
   const classes = useStyles();
-
+  const history = useHistory();
   const { profiles, messages } = useSelector((state) => state.chat);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -111,8 +111,9 @@ const AppBar = () => {
           anchorPosition={{ top: 50, left: 25 }}
           anchorReference={"anchorPosition"}
         >
-          <MenuItem key={1}>Профиль</MenuItem>
-          <MenuItem key={2}>Настройки</MenuItem>
+          <MenuItem key={1} onClick={() => history.push("/stocks")}>Котировки</MenuItem>
+          <MenuItem key={2}>Профиль</MenuItem>
+          <MenuItem key={3}>Настройки</MenuItem>
         </Menu>
 
         <TextField
