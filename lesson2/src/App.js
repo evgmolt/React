@@ -1,11 +1,15 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CustomRoute from "./util/CustomRoute";
 import Chat from "./Chat";
 import Playground from "./Playground";
 import Stocks from "./Stocks";
 import Profile from "./Profile";
 import Home from "./Home";
 import AppBar from "./AppBar";
+import Signup from "./Auth/Signup";
+import Login from "./Auth/Login";
 import { makeStyles } from "@material-ui/core/styles";
+import firebase from "firebase/compat";
 
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
@@ -14,6 +18,20 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
 }));
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBQuSDcYGA4kXHzGbSVmPb_XgxY_RsPtuE",
+  authDomain: "gb-react-project-b7c7f.firebaseapp.com",
+  databaseURL: "https://gb-react-project-b7c7f-default-rtdb.europe-west1.firebasedatabase.app/",
+  projectId: "gb-react-project-b7c7f",
+  storageBucket: "gb-react-project-b7c7f.appspot.com",
+  messagingSenderId: "123425933655",
+  appId: "1:123425933655:web:19024b176853ffe7bcd612"
+};
+
+
+firebase.initializeApp(firebaseConfig);
+export const db = firebase.database();
 
 const App = () => {
   const classes = useStyles();
@@ -28,11 +46,19 @@ const App = () => {
             <Chat />
           </Route>
 
-          <Route path="/playground">
+          <CustomRoute path="/playground" secured withAppBar={true}>
             <Playground myProps={1} />
+          </CustomRoute>
+
+          <Route path="/login">
+            <Login />
           </Route>
 
-          <Route path="/Stocks">
+          <Route path="/signup">
+            <Signup />
+          </Route>          
+
+          <Route path="/Stocks" secured withAppBar={true}>
             <Stocks />
           </Route>
 
@@ -40,7 +66,7 @@ const App = () => {
             <Profile />
           </Route>
 
-          <Route path="/">
+          <Route path="/" withAppBar={false}>
             <Home />
           </Route>
         </Switch>

@@ -33,7 +33,7 @@ const MessageList = ({ messagesArray }) => {
 
   return (
     <div className={classes.messageList}>
-      {messagesArray.map((message, i) => (
+     {messagesArray && messagesArray.map((message, i) => (
         <div
           key={i}
           className={`
@@ -43,7 +43,7 @@ const MessageList = ({ messagesArray }) => {
                 : classes.senderMessage
             } ${classes.message}`}
         >
-          {message.text}
+          {message.messageText}
         </div>
       ))}
     </div>

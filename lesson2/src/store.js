@@ -8,7 +8,7 @@ import { persistReducer } from "redux-persist";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["stocks"],
+  blacklist: ["stocks", "chat"],
 };
 
 const reducers = combineReducers({ chat: chatReducer, stocks: stocksReducer });
