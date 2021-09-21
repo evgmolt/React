@@ -29,23 +29,24 @@ const useStyles = makeStyles(() => ({
 
 const MessageList = ({ messagesArray }) => {
   const classes = useStyles();
-  const { myId } = useSelector((state) => state.chat);
+  const { myUid } = useSelector((state) => state.chat);
 
   return (
-    <div className={classes.messageList}>
-     {messagesArray && messagesArray.map((message, i) => (
-        <div
-          key={i}
-          className={`
+    <div className={`${classes.messageList} messageList`}>
+      {messagesArray &&
+        messagesArray.map((message, i) => (
+          <div
+            key={i}
+            className={`
             ${
-              message.userId === myId
+              message.authorUid === myUid
                 ? classes.userMessage
                 : classes.senderMessage
             } ${classes.message}`}
-        >
-          {message.messageText}
-        </div>
-      ))}
+          >
+            {message.messageText}
+          </div>
+        ))}
     </div>
   );
 };

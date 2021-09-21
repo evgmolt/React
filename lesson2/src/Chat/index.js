@@ -26,17 +26,39 @@ const useStyles = makeStyles((theme) => ({
 
 function Chat() {
   const urlParams = useParams();
-  const chatId = Number.parseInt(urlParams.id);
+  const targetUId = urlParams.id;
+  const chats = useSelector((state) => state.chat.chats);
+  const targetProfileId = Object.keys(chats).find((profileId) => profileId);
+
+  const chatId = chats[targetProfileId] ? chats[targetProfileId].chatId : null;
 
   const messages = useSelector((state) => state.chat.messages[chatId]);
-  const myId = useSelector((state) => state.chat.myId);
+
+  const myUid = useSelector((state) => state.chat.myUid);
   const dispatch = useDispatch();
 
   const classes = useStyles();
 
   const onSendMessage = (messageText) => {
-    dispatch(sendMessageWithThunk({ chatId, messageText, authorId: myId }));
+    dispatch(
+      sendMessageWithThunk({
+        chatId,
+        messageText,
+        authorUid: myUid,
+        targetUid: targetUId,
+      })
+    );
   };
+
+  useEffect(() => {
+    if (document.getElementsByClassName("messageList")[0]) {
+      document.getElementsByClassName("messageList")[0].scrollTop = 999999;
+    }
+  });
+
+  if (!targetProfileId || !chatId) {
+    return <div>Ошибка, нет собеседника</div>;
+  }
 
   return (
     <div className={classes.chatWrapper}>
